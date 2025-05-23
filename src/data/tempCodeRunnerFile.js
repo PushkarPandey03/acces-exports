@@ -4,4 +4,4 @@ import Team from 'icons/lineal/Team';
 import Check from 'icons/lineal/Check';
 import Medal from 'icons/lineal/Medal';
 import Earth from 'icons/lineal/Earth';
-import Shield from 'ic
+import Shield from 'icons/lineal/Shield';
