@@ -4,49 +4,45 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
-// Dynamically import ThemeProvider if it uses client-side APIs
+// Dynamically import ThemeProvider
 const ThemeProvider = dynamic(() => import('theme/ThemeProvider'), { ssr: false });
-
-// Dynamically import CSS to avoid SSR issues
-const loadStyles = async () => {
-  if (typeof window === 'undefined') return;
-
-  await import('animate.css');
-  await import('swiper/css');
-  await import('swiper/css/free-mode');
-  await import('swiper/css/navigation');
-  await import('swiper/css/pagination');
-  await import('swiper/css/thumbs');
-  await import('plyr-react/plyr.css');
-  await import('glightbox/dist/css/glightbox.css');
-  await import('plugins/scrollcue/scrollCue.css');
-  await import('assets/scss/style.scss');
-};
 
 function MyApp({ Component, pageProps }) {
   const { pathname } = useRouter();
   const [loading, setLoading] = useState(true);
 
-  // Load Bootstrap and ScrollCue on client side
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // Load styles
-    loadStyles();
+    // Dynamically load CSS
+    Promise.all([
+      import('animate.css'),
+      import('swiper/css'),
+      import('swiper/css/free-mode'),
+      import('swiper/css/navigation'),
+      import('swiper/css/pagination'),
+      import('swiper/css/thumbs'),
+      import('plyr-react/plyr.css'),
+      import('glightbox/dist/css/glightbox.css'),
+      import('plugins/scrollcue/scrollCue.css'),
+      import('assets/scss/style.scss'),
+    ]).catch((err) => console.error('Failed to load CSS:', err));
 
     // Load Bootstrap
-    import('bootstrap');
+    import('bootstrap').catch((err) => console.error('Failed to load Bootstrap:', err));
 
     // Load ScrollCue
-    (async () => {
-      const scrollCue = (await import('plugins/scrollcue')).default;
-      scrollCue.init({
-        interval: -400,
-        duration: 700,
-        percentage: 0.8,
-      });
-      scrollCue.update();
-    })();
+    import('plugins/scrollcue')
+      .then((module) => {
+        const scrollCue = module.default;
+        scrollCue.init({
+          interval: -400,
+          duration: 700,
+          percentage: 0.8,
+        });
+        scrollCue.update();
+      })
+      .catch((err) => console.error('Failed to load ScrollCue:', err));
   }, [pathname]);
 
   // Manage loading status
