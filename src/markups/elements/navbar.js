@@ -1,17 +1,17 @@
 // ./pages/docs/blocks/navbar.jsx
 import { Fragment } from 'react';
-import {
-  markup1,
-  markup2,
-  markup3,
-  markup4,
-  markup5,
-  markup6,
-  markup7,
-  markup8,
-  markup9,
-  markup10,
-} from '../../markups/elements/navbar'; // Adjust path as needed
+// import {
+//   markup1,
+//   markup2,
+//   markup3,
+//   markup4,
+//   markup5,
+//   markup6,
+//   markup7,
+//   markup8,
+//   markup9,
+//   markup10,
+// } from '../../markups/elements/navbar'; // Adjust path as needed
 
 const NavbarDocs = () => {
   return (
