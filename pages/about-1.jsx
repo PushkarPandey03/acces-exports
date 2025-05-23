@@ -2,17 +2,19 @@
 import { Fragment } from 'react';
 import dynamic from 'next/dynamic';
 
-// Dynamically import components that may use plyr to prevent SSR issues
-const About6 = dynamic(() => import('components/blocks/about/About6'), { ssr: false });
+// Dynamically import components that may use plyr, plyr-react, or other client-side libraries
 const Testimonial5 = dynamic(() => import('components/blocks/testimonial/Testimonial5'), { ssr: false });
 const Contact7 = dynamic(() => import('components/blocks/contact/Contact7'), { ssr: false });
+const Tiles5 = dynamic(() => import('components/elements/tiles/Tiles5'), { ssr: false });
+const ListColumn = dynamic(() => import('components/reuseable/ListColumn'), { ssr: false });
+const Team3 = dynamic(() => import('components/blocks/team/Team3'), { ssr: false });
+const Facts5 = dynamic(() => import('components/blocks/facts/Facts5'), { ssr: false });
+const Process7 = dynamic(() => import('components/blocks/process/Process7'), { ssr: false });
+const Footer8 = dynamic(() => import('components/blocks/footer/Footer8'), { ssr: false });
 
-// Other components (assumed safe, but verify if errors persist)
-import { Team3 } from 'components/blocks/team';
-import { Facts5 } from 'components/blocks/facts';
+// Safe components (verified or unlikely to use plyr/plyr-react)
+import { About6 } from 'components/blocks/about';
 import { Navbar } from 'components/blocks/navbar';
-import { Footer8 } from 'components/blocks/footer';
-import { Process7 } from 'components/blocks/process';
 import FigureImage from 'components/reuseable/FigureImage';
 import NextLink from 'components/reuseable/links/NextLink';
 
