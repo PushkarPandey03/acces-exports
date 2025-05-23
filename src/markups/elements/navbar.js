@@ -19,7 +19,7 @@ const NavbarDocs = () => {
       <h1>Navbar Variations</h1>
       <p>This page demonstrates different navbar configurations.</p>
 
-      <section>
+      {/* <section>
         <h2>Navbar 1</h2>
         {markup1()}
       </section>
@@ -58,7 +58,7 @@ const NavbarDocs = () => {
       <section>
         <h2>Navbar 10</h2>
         {markup10()}
-      </section>
+      </section> */}
     </Fragment>
   );
 };
