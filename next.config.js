@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['plyr'], // Transpile plyr if needed
+  transpilePackages: ['plyr', 'plyr-react'], // Transpile plyr and plyr-react
   webpack: (config, { isServer }) => {
     if (!isServer) {
-      // Ensure plyr is only loaded on the client side
+      // Prevent server-side issues with Node.js-specific modules
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,

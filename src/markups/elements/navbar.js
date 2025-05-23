@@ -2,11 +2,8 @@
 import dynamic from 'next/dynamic';
 import NextLink from 'components/reuseable/links/NextLink';
 
-// Dynamically import Navbar to avoid SSR issues
+// Dynamically import Navbar to avoid potential SSR issues
 const Navbar = dynamic(() => import('components/blocks/navbar'), { ssr: false });
-
-// Dynamically import Plyr only on the client side (if used in Navbar or /about-1)
-const Plyr = dynamic(() => import('plyr'), { ssr: false });
 
 export const markup1 = `
 import { Navbar } from 'components/blocks/navbar';
