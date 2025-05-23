@@ -1,51 +1,61 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+// pages/_app.js
 import { Fragment, useEffect, useState } from 'react';
-import ThemeProvider from 'theme/ThemeProvider'; // animate css
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import dynamic from 'next/dynamic';
 
-import 'animate.css'; // import swiper css
+// Dynamically import ThemeProvider if it uses client-side APIs
+const ThemeProvider = dynamic(() => import('theme/ThemeProvider'), { ssr: false });
 
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/thumbs'; // video player css
+// Dynamically import CSS to avoid SSR issues
+const loadStyles = async () => {
+  if (typeof window === 'undefined') return;
 
-import 'plyr-react/plyr.css'; // glightbox css
+  await import('animate.css');
+  await import('swiper/css');
+  await import('swiper/css/free-mode');
+  await import('swiper/css/navigation');
+  await import('swiper/css/pagination');
+  await import('swiper/css/thumbs');
+  await import('plyr-react/plyr.css');
+  await import('glightbox/dist/css/glightbox.css');
+  await import('plugins/scrollcue/scrollCue.css');
+  await import('assets/scss/style.scss');
+};
 
-import 'glightbox/dist/css/glightbox.css'; // custom scrollcue css
+function MyApp({ Component, pageProps }) {
+  const { pathname } = useRouter();
+  const [loading, setLoading] = useState(true);
 
-import 'plugins/scrollcue/scrollCue.css'; // Bootstrap and custom scss
-
-import 'assets/scss/style.scss';
-
-function MyApp({
-  Component,
-  pageProps
-}) {
-  const {
-    pathname
-  } = useRouter();
-  const [loading, setLoading] = useState(true); // added bootstrap functionality
-
+  // Load Bootstrap and ScrollCue on client side
   useEffect(() => {
-    if (typeof window !== 'undefined') import('bootstrap');
-  }, []); // scroll animation added
+    if (typeof window === 'undefined') return;
 
-  useEffect(() => {
+    // Load styles
+    loadStyles();
+
+    // Load Bootstrap
+    import('bootstrap');
+
+    // Load ScrollCue
     (async () => {
       const scrollCue = (await import('plugins/scrollcue')).default;
       scrollCue.init({
         interval: -400,
         duration: 700,
-        percentage: 0.8
+        percentage: 0.8,
       });
       scrollCue.update();
     })();
-  }, [pathname]); // manage loading status
+  }, [pathname]);
 
-  useEffect(() => setLoading(false), []);
-  return <Fragment>
+  // Manage loading status
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  return (
+    <Fragment>
       <Head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,12 +63,10 @@ function MyApp({
       </Head>
 
       <ThemeProvider>
-        {
-        /* <div className="page-loader" /> */
-      }
         {loading ? <div className="page-loader" /> : <Component {...pageProps} />}
       </ThemeProvider>
-    </Fragment>;
+    </Fragment>
+  );
 }
 
 export default MyApp;

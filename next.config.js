@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['plyr', 'plyr-react', 'swiper'], // Transpile problematic packages
+  transpilePackages: ['bootstrap', 'plyr', 'plyr-react'], // Include if used by Navbar or other components
+  images: {
+    domains: [], // Add external image domains if needed
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
-      // Prevent server-side issues with Node.js-specific modules
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,

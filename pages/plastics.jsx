@@ -3,12 +3,12 @@ import { Fragment } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-// Dynamically import components that may use client-side libraries or browser-specific APIs
+// Dynamically import components
 const Navbar = dynamic(() => import('components/blocks/navbar'), { ssr: false });
 const Footer8 = dynamic(() => import('components/blocks/footer'), { ssr: false });
 const PageProgress = dynamic(() => import('components/common/PageProgress'), { ssr: false });
 
-// Safe component (NextLink is unlikely to cause issues)
+// Safe component
 import NextLink from 'components/reuseable/links/NextLink';
 
 const ProjectDetails = () => {
@@ -16,7 +16,6 @@ const ProjectDetails = () => {
     <Fragment>
       <PageProgress />
 
-      {/* Navbar Section */}
       <Navbar
         language
         button={
@@ -28,9 +27,7 @@ const ProjectDetails = () => {
         }
       />
 
-      {/* Header Section */}
       <header style={{ backgroundColor: '#f3f8fc', padding: '1rem 0' }}>
-        {/* Full-Width Image */}
         <div style={{ marginBottom: '1rem', padding: '0 1rem' }}>
           <Image
             src="/img/cardimg/basmati-rice.jpg"
@@ -43,11 +40,10 @@ const ProjectDetails = () => {
               width: '100%',
               height: 'auto',
             }}
-            priority // Optional: for faster loading of above-the-fold image
+            priority
           />
         </div>
 
-        {/* Brief Information about Basmati Rice 1121 */}
         <div style={{ textAlign: 'center', margin: '1rem auto', maxWidth: '800px' }}>
           <p style={{ fontSize: '1.4rem', color: '#555' }}>
             Discover the finest Basmati Rice 1121, known for its exceptional aroma, long grains, and superior quality. 
@@ -57,7 +53,6 @@ const ProjectDetails = () => {
       </header>
 
       <main style={{ backgroundColor: '#ffffff', color: '#333333' }}>
-        {/* Centered Heading and Information */}
         <section style={{ padding: '4rem 2rem', backgroundColor: '#ffffff' }}>
           <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
             <h1
@@ -80,9 +75,8 @@ const ProjectDetails = () => {
                 textAlign: 'left',
               }}
             >
-              {/* Image of Basmati Rice 1121 */}
               <Image
-                src="/img/photos/image-21.jpg" // Fixed image path (removed spaces, standardized naming)
+                src="/img/photos/image-21.jpg"
                 alt="Basmati Rice 1121"
                 width={400}
                 height={300}
@@ -93,8 +87,6 @@ const ProjectDetails = () => {
                   height: 'auto',
                 }}
               />
-              
-              {/* Information about Basmati Rice 1121 */}
               <ul
                 style={{
                   paddingLeft: '1.5rem',
@@ -123,7 +115,7 @@ const ProjectDetails = () => {
             fontFamily: "'Roboto', sans-serif",
           }}
         >
-          {/* Additional content can go here if needed */}
+          {/* Additional content can go here */}
         </section>
       </main>
 
@@ -134,13 +126,11 @@ const ProjectDetails = () => {
 
 export default ProjectDetails;
 
-// Optional: Add getStaticProps for static site generation
 export async function getStaticProps() {
   try {
-    // Add data fetching logic here if needed
     return {
       props: {},
-      revalidate: 60, // Enable Incremental Static Regeneration (ISR) if needed
+      revalidate: 60,
     };
   } catch (error) {
     console.error('Error in getStaticProps:', error);
