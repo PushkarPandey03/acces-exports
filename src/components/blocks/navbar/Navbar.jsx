@@ -1,7 +1,8 @@
+// components/Navbar.jsx
 import Link from 'next/link';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, useEffect } from 'react';
 
-// Custom hooks (simplified implementations to avoid import errors)
+// Custom hooks
 const useSticky = (offset) => {
   const [isSticky, setIsSticky] = useState(false);
 
@@ -17,14 +18,12 @@ const useSticky = (offset) => {
 };
 
 const useNestedDropdown = () => {
-  // Placeholder for dropdown handling (assuming it manages nested dropdown states)
-  // If you have the actual implementation, replace this with the real hook
   useEffect(() => {
-    // Add event listeners for nested dropdowns if needed
+    // Placeholder for dropdown handling
   }, []);
 };
 
-// Reusable link components
+// resauble link components
 const NextLink = ({ href, title, className }) => (
   <Link href={href} className={className}>
     {title}

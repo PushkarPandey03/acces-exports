@@ -1,120 +1,66 @@
-const markup1 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
+// ./pages/docs/blocks/navbar.jsx
+import { Fragment } from 'react';
+import {
+  markup1,
+  markup2,
+  markup3,
+  markup4,
+  markup5,
+  markup6,
+  markup7,
+  markup8,
+  markup9,
+  markup10,
+} from '../../markups/elements/navbar'; // Adjust path as needed
 
-<Navbar language button={<NextLink title="Contact" href="#" className="btn btn-sm btn-primary rounded" />} />
-`;
-const markup2 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
+const NavbarDocs = () => {
+  return (
+    <Fragment>
+      <h1>Navbar Variations</h1>
+      <p>This page demonstrates different navbar configurations.</p>
 
-<Navbar
-  language
-  logoAlt="logo-light"
-  navClassName="navbar navbar-expand-lg center-nav transparent navbar-dark"
-  button={<NextLink title="Contact" href="#" className="btn btn-sm btn-primary rounded" />}
-/>
-`;
-const markup3 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
+      <section>
+        <h2>Navbar 1</h2>
+        {markup1()}
+      </section>
+      <section>
+        <h2>Navbar 2</h2>
+        {markup2()}
+      </section>
+      <section>
+        <h2>Navbar 3</h2>
+        {markup3()}
+      </section>
+      <section>
+        <h2>Navbar 4</h2>
+        {markup4()}
+      </section>
+      <section>
+        <h2>Navbar 5</h2>
+        {markup5()}
+      </section>
+      <section>
+        <h2>Navbar 6</h2>
+        {markup6()}
+      </section>
+      <section>
+        <h2>Navbar 7</h2>
+        {markup7()}
+      </section>
+      <section>
+        <h2>Navbar 8</h2>
+        {markup8()}
+      </section>
+      <section>
+        <h2>Navbar 9</h2>
+        {markup9()}
+      </section>
+      <section>
+        <h2>Navbar 10</h2>
+        {markup10()}
+      </section>
+    </Fragment>
+  );
+};
 
-<Navbar
-  language
-  navClassName="navbar navbar-expand-lg center-nav navbar-light navbar-bg-light"
-  button={<NextLink title="Contact" href="#" className="btn btn-sm btn-primary rounded" />}
-/>
-`;
-const markup4 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
-
-<Navbar
-  language
-  logoAlt="logo-light"
-  navClassName="navbar navbar-expand-lg center-nav navbar-dark navbar-bg-dark"
-  button={<NextLink title="Contact" href="#" className="btn btn-sm btn-primary rounded" />}
-/>
-`;
-const markup5 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
-
-<Navbar
-  fancy
-  language
-  logoAlt="logo-purple"
-  navClassName="navbar navbar-expand-lg fancy navbar-light navbar-bg-light caret-none"
-  button={<NextLink title="Contact" href="#" className="btn btn-sm btn-primary rounded" />}
-/>
-`;
-const markup6 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
-
-<Navbar
-  info
-  navOtherClass="navbar-other ms-lg-4"
-  navClassName="navbar navbar-expand-lg classic transparent navbar-light"
-  button={
-    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-signin" className="btn btn-sm btn-primary rounded-pill">
-      Sign In
-    </a>
-  }
-/>
-`;
-const markup7 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
-
-<Navbar
-  info
-  logoAlt="logo-light"
-  navOtherClass="navbar-other ms-lg-4"
-  navClassName="navbar navbar-expand-lg classic transparent navbar-dark"
-  button={
-    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-signin" className="btn btn-sm btn-white rounded-pill">
-      Sign In
-    </a>
-  }
-/>
-`;
-const markup8 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
-
-<Navbar
-  info
-  navOtherClass="navbar-other ms-lg-4"
-  navClassName="navbar navbar-expand-lg classic navbar-light navbar-bg-light"
-  button={
-    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-signin" className="btn btn-sm btn-primary rounded-pill">
-      Sign In
-    </a>
-  }
-/>
-`;
-const markup9 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
-
-<Navbar
-  info
-  logoAlt="logo-light"
-  navOtherClass="navbar-other ms-lg-4"
-  navClassName="navbar navbar-expand-lg classic navbar-dark navbar-bg-dark"
-  button={
-    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-signin" className="btn btn-sm btn-primary rounded-pill">
-      Sign In
-    </a>
-  }
-/>
-`;
-const markup10 = `import { Navbar } from 'components/blocks/navbar';
-import NextLink from 'components/reuseable/links/NextLink';
-
-<Navbar
-  info
-  fancy
-  navOtherClass="navbar-other ms-lg-4"
-  navClassName="navbar navbar-expand-lg fancy navbar-light navbar-bg-light"
-  button={
-    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-signin" className="btn btn-sm btn-primary rounded-pill">
-      Sign In
-    </a>
-  }
-/>
-`;
-
-export { markup1, markup2, markup3, markup4, markup5, markup6, markup7, markup8, markup9, markup10};
+export default NavbarDocs;
