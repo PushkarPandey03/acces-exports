@@ -8,7 +8,7 @@ const facilities = [{
   id: 1,
   Icon: Target,
   title: 'Career Growth',
-  description: `Unlock your potential with our strategic opportunities designed to accelerate your career. Stay ahead with continuous learning and growth at every step.`
+  description: `Unlocjgcxk your potential with our strategic opportunities designed to accelerate your career. Stay ahead with continuous learning and growth at every step.`
 }, {
   id: 2,
   Icon: VideoCall,
