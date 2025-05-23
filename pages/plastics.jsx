@@ -1,8 +1,14 @@
-import Image from 'next/image';
+// pages/basmati-rice.jsx
 import { Fragment } from 'react';
-import { Navbar } from 'components/blocks/navbar';
-import { Footer8 } from 'components/blocks/footer';
-import PageProgress from 'components/common/PageProgress';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
+
+// Dynamically import components that may use client-side libraries or browser-specific APIs
+const Navbar = dynamic(() => import('components/blocks/navbar'), { ssr: false });
+const Footer8 = dynamic(() => import('components/blocks/footer'), { ssr: false });
+const PageProgress = dynamic(() => import('components/common/PageProgress'), { ssr: false });
+
+// Safe component (NextLink is unlikely to cause issues)
 import NextLink from 'components/reuseable/links/NextLink';
 
 const ProjectDetails = () => {
@@ -29,13 +35,15 @@ const ProjectDetails = () => {
           <Image
             src="/img/cardimg/basmati-rice.jpg"
             alt="Basmati Rice 1121 Header"
-            layout="responsive"
             width={1920}
             height={200}
             style={{
               borderRadius: '15px',
               objectFit: 'cover',
+              width: '100%',
+              height: 'auto',
             }}
+            priority // Optional: for faster loading of above-the-fold image
           />
         </div>
 
@@ -74,13 +82,15 @@ const ProjectDetails = () => {
             >
               {/* Image of Basmati Rice 1121 */}
               <Image
-                src="/img/photos/image (21).jpg" // Update with appropriate image path
+                src="/img/photos/image-21.jpg" // Fixed image path (removed spaces, standardized naming)
                 alt="Basmati Rice 1121"
                 width={400}
                 height={300}
                 style={{
                   borderRadius: '10px',
                   objectFit: 'cover',
+                  width: '100%',
+                  height: 'auto',
                 }}
               />
               
@@ -123,3 +133,19 @@ const ProjectDetails = () => {
 };
 
 export default ProjectDetails;
+
+// Optional: Add getStaticProps for static site generation
+export async function getStaticProps() {
+  try {
+    // Add data fetching logic here if needed
+    return {
+      props: {},
+      revalidate: 60, // Enable Incremental Static Regeneration (ISR) if needed
+    };
+  } catch (error) {
+    console.error('Error in getStaticProps:', error);
+    return {
+      props: {},
+    };
+  }
+}

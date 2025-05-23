@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['plyr', 'plyr-react'], // Transpile plyr and plyr-react
+  transpilePackages: ['plyr', 'plyr-react', 'swiper'], // Transpile problematic packages
   webpack: (config, { isServer }) => {
     if (!isServer) {
       // Prevent server-side issues with Node.js-specific modules
