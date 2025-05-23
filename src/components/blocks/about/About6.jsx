@@ -1,7 +1,12 @@
+// components/blocks/about/About6.jsx
+import dynamic from 'next/dynamic';
 import Megaphone from 'icons/lineal/Megaphone';
-import { Tiles5 } from 'components/elements/tiles';
-import ListColumn from 'components/reuseable/ListColumn'; // -------- data -------- //
+import ListColumn from 'components/reuseable/ListColumn';
+// -------- data -------- //
 import { aboutList2 } from 'data/about';
+
+// Dynamically import Tiles5 to prevent SSR issues (e.g., if it uses plyr or DOM APIs)
+const Tiles5 = dynamic(() => import('components/elements/tiles/Tiles5'), { ssr: false });
 
 const About6 = () => {
   return (
