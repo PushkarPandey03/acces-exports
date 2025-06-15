@@ -1,12 +1,20 @@
 // components/Navbar.jsx
-import Link from 'next/link';
 import { Fragment, useRef, useState, useEffect } from 'react';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import PropTypes from 'prop-types';
 
-// Custom hooks
+// Dynamically import Bootstrap-dependent components to avoid SSR issues
+const BootstrapComponents = dynamic(() => import('react-bootstrap'), { ssr: false });
+
+// Custom hook for sticky navbar
 const useSticky = (offset) => {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
+    // Check if window is available (SSR-safe)
+    if (typeof window === 'undefined') return;
+
     const handleScroll = () => {
       setIsSticky(window.scrollY > offset);
     };
@@ -17,13 +25,7 @@ const useSticky = (offset) => {
   return isSticky;
 };
 
-const useNestedDropdown = () => {
-  useEffect(() => {
-    // Placeholder for dropdown handling
-  }, []);
-};
-
-// resauble link components
+// Reusable link components
 const NextLink = ({ href, title, className }) => (
   <Link href={href} className={className}>
     {title}
@@ -44,13 +46,13 @@ const DropdownToggleLink = ({ title, className }) => (
   </a>
 );
 
-const NavLinko = ({ title, href, className }) => (
+const NavLink = ({ title, href, className }) => (
   <Link href={href} className={className}>
     {title}
   </Link>
 );
 
-const Buttono = ({ title, className, downloadLink }) => (
+const Button = ({ title, className, downloadLink }) => (
   <a href={downloadLink} className={className} download>
     {title}
   </a>
@@ -59,13 +61,13 @@ const Buttono = ({ title, className, downloadLink }) => (
 // SocialLinks component
 const SocialLinks = () => (
   <div className="social-links">
-    <a href="https://facebook.com" className="uil uil-facebook-f" />
-    <a href="https://twitter.com" className="uil uil-twitter" />
-    <a href="https://instagram.com" className="uil uil-instagram" />
+    <a href="https://facebook.com" className="uil uil-facebook-f" aria-label="Facebook" />
+    <a href="https://twitter.com" className="uil uil-twitter" aria-label="Twitter" />
+    <a href="https://instagram.com" className="uil uil-instagram" aria-label="Instagram" />
   </div>
 );
 
-// Partial components
+// Offcanvas components
 const Info = () => (
   <div
     id="offcanvas-info"
@@ -202,7 +204,7 @@ const navigation = {
       id: 3,
       title: 'Battery',
       subItems: [
-        { id: 31, title: 'Lead Acid', url: '/Lead-acid' },
+        { id: 31, title: 'Lead Acid', url: '/lead-acid' },
       ],
     },
     {
@@ -224,157 +226,153 @@ const navigation = {
       id: 6,
       title: 'Grains Spices',
       subItems: [
-        { id: 61, title: 'Basmati Rice', url: '/plastics' },
+        { id: 61, title: 'Basmati Rice', url: '/basmati-rice' },
       ],
     },
   ],
 };
 
-const Navbar = (props) => {
-  const {
-    navClassName = 'navbar navbar-expand-lg center-nav transparent navbar-light',
-    info = false,
-    search = false,
-    social = false,
-    language = true,
-    button = true,
-    cart = false,
-    fancy = false,
-    navOtherClass = 'navbar-other w-100 d-flex ms-auto',
-    stickyBox = true,
-    logoAlt = 'logo-dark',
-  } = props;
+// Translations
+const translations = {
+  en: {
+    about_us: 'About Us',
+    who_we_are: 'Who We Are',
+    our_values: 'Our Values',
+    products: 'Products',
+    split_packaging: 'Spirit Packaging',
+    closure: 'Closure',
+    glass_bottles: 'Glass Bottles',
+    food_beverages: 'Food & Beverages',
+    closures_jars: 'Closures and Jars',
+    battery: 'Battery',
+    lead_acid: 'Lead Acid Battery',
+    sausage: 'Sausage',
+    product_list_sauces: 'Product List (Sauces)',
+    steel_wires: 'Steel Wires',
+    stainless_steel: 'Stainless Steel',
+    welding_wire: 'Welding Wire',
+    grains_spices: 'Grains & Spices',
+    basmati_rice: '1121 Basmati Rice',
+    contact_us: 'Contact Us',
+    download_brochure: 'Download Brochure',
+    brand_name: 'Export',
+  },
+  hi: {
+    about_us: 'हमारे बारे में',
+    who_we_are: 'हम कौन हैं',
+    our_values: 'हमारे मूल्य',
+    products: 'उत्पाद',
+    split_packaging: 'विभाजित पैकेजिंग',
+    closure: 'बंद करना',
+    glass_bottles: 'कांच की बोतलें',
+    food_beverages: 'खाद्य और पेय',
+    closures_jars: 'बंद और जार',
+    battery: 'बैटरी',
+    lead_acid: 'लेड एसिड बैटरी',
+    sausage: 'सॉसेज',
+    product_list_sauces: 'उत्पाद सूची (सॉस)',
+    steel_wires: 'स्टील के तार',
+    stainless_steel: 'स्टेनलेस स्टील',
+    welding_wire: 'वेल्डिंग वायर',
+    grains_spices: 'अनाज और मसाले',
+    basmati_rice: '1121 बासमती चावल',
+    contact_us: 'हमसे संपर्क करें',
+    download_brochure: 'ब्रोशर डाउनलोड करें',
+    brand_name: 'निर्यात',
+  },
+  fr: {
+    about_us: 'À propos de nous',
+    who_we_are: 'Qui nous sommes',
+    our_values: 'Nos valeurs',
+    products: 'Produits',
+    split_packaging: 'Emballage fractionné',
+    closure: 'Fermeture',
+    glass_bottles: 'Bouteilles en verre',
+    food_beverages: 'Aliments et boissons',
+    closures_jars: 'Fermetures et bocaux',
+    battery: 'Batterie',
+    lead_acid: 'Batterie au plomb',
+    sausage: 'Saucisse',
+    product_list_sauces: 'Liste de produits (sauces)',
+    steel_wires: 'Fils d’acier',
+    stainless_steel: 'Acier inoxydable',
+    welding_wire: 'Fil de soudage',
+    grains_spices: 'Grains et épices',
+    basmati_rice: 'Riz basmati 1121',
+    contact_us: 'Nous contacter',
+    download_brochure: 'Télécharger la brochure',
+    brand_name: 'Exportation',
+  },
+  es: {
+    about_us: 'Sobre nosotros',
+    who_we_are: 'Quiénes somos',
+    our_values: 'Nuestros valores',
+    products: 'Productos',
+    split_packaging: 'Embalaje dividido',
+    closure: 'Cierre',
+    glass_bottles: 'Botellas de vidrio',
+    food_beverages: 'Alimentos y bebidas',
+    closures_jars: 'Cierres y frascos',
+    battery: 'Batería',
+    lead_acid: 'Batería de plomo-ácido',
+    sausage: 'Salchicha',
+    product_list_sauces: 'Lista de productos (salsas)',
+    steel_wires: 'Alambres de acero',
+    stainless_steel: 'Acero inoxidable',
+    welding_wire: 'Alambre de soldadura',
+    grains_spices: 'Granos y especias',
+    basmati_rice: 'Arroz basmati 1121',
+    contact_us: 'Contáctanos',
+    download_brochure: 'Descargar folleto',
+    brand_name: 'Exportación',
+  },
+  de: {
+    about_us: 'Über uns',
+    who_we_are: 'Wer wir sind',
+    our_values: 'Unsere Werte',
+    products: 'Produkte',
+    split_packaging: 'Geteilte Verpackung',
+    closure: 'Verschluss',
+    glass_bottles: 'Glasflaschen',
+    food_beverages: 'Lebensmittel und Getränke',
+    closures_jars: 'Verschlüsse und Gläser',
+    battery: 'Batterie',
+    lead_acid: 'Blei-Säure-Batterie',
+    sausage: 'Wurst',
+    product_list_sauces: 'Produktliste (Saucen)',
+    steel_wires: 'Stahldrähte',
+    stainless_steel: 'Edelstahl',
+    welding_wire: 'Schweißdraht',
+    grains_spices: 'Körner und Gewürze',
+    basmati_rice: '1121 Basmatireis',
+    contact_us: 'Kontaktieren Sie uns',
+    download_brochure: 'Broschüre herunterladen',
+    brand_name: 'Export',
+  },
+};
 
-  // Language state and translations
+const languageOptions = [
+  { code: 'en', name: 'English' },
+  { code: 'hi', name: 'हिन्दी (Hindi)' },
+  { code: 'fr', name: 'Français (French)' },
+  { code: 'es', name: 'Español (Spanish)' },
+  { code: 'de', name: 'Deutsch (German)' },
+];
+
+const Navbar = ({
+  navClassName = 'navbar navbar-expand-lg center-nav transparent navbar-light',
+  info = false,
+  search = false,
+  social = false,
+  language = true,
+  button = true,
+  cart = false,
+  fancy = false,
+  navOtherClass = 'navbar-other w-100 d-flex ms-auto',
+  stickyBox = true,
+  logoAlt = 'logo-dark',
+}) => {
   const [selectedLanguage, setSelectedLanguage] = useState('en');
-
-  const translations = {
-    en: {
-      about_us: 'About Us',
-      who_we_are: 'Who we are',
-      our_values: 'Our Values',
-      products: 'Products',
-      split_packaging: 'Spirit Packaging',
-      closure: 'Closure',
-      glass_bottles: 'Glass Bottles',
-      food_beverages: 'Food & Beverages',
-      closures_jars: 'Closures and Jars',
-      battery: 'Battery',
-      lead_acid: 'Lead Acid Battery',
-      sausage: 'Sausage',
-      product_list_sauces: 'Product List (Sauces)',
-      steel_wires: 'Steel Wires',
-      stainless_steel: 'Stainless Steel',
-      welding_wire: 'Welding Wire',
-      grains_spices: 'Grains & Spices',
-      basmati_rice: '1121 Basmati Rice',
-      contact_us: 'Contact Us',
-      download_brochure: 'Download Brochure',
-      brand_name: 'export',
-    },
-    hi: {
-      about_us: 'हमारे बारे में',
-      who_we_are: 'हम कौन हैं',
-      our_values: 'हमारे मूल्य',
-      products: 'उत्पाद',
-      split_packaging: 'विभाजित पैकेजिंग',
-      closure: 'बंद करना',
-      glass_bottles: 'कांच की बोतलें',
-      food_beverages: 'खाद्य और पेय',
-      closures_jars: 'बंद और जार',
-      battery: 'बैटरी',
-      lead_acid: 'लेड एसिड बैटरी',
-      sausage: 'सॉसेज',
-      product_list_sauces: 'उत्पाद सूची (सॉस)',
-      steel_wires: 'स्टील के तार',
-      stainless_steel: 'स्टेनलेस स्टील',
-      welding_wire: 'वेल्डिंग वायर',
-      grains_spices: 'अनाज और मसाले',
-      basmati_rice: '1121 बासमती चावल',
-      contact_us: 'हमसे संपर्क करें',
-      download_brochure: 'ब्रोशर डाउनलोड करें',
-      brand_name: 'निर्यात',
-    },
-    fr: {
-      about_us: 'À propos de nous',
-      who_we_are: 'Qui nous sommes',
-      our_values: 'Nos valeurs',
-      products: 'Produits',
-      split_packaging: 'Emballage fractionné',
-      closure: 'Fermeture',
-      glass_bottles: 'Bouteilles en verre',
-      food_beverages: 'Aliments et boissons',
-      closures_jars: 'Fermetures et bocaux',
-      battery: 'Batterie',
-      lead_acid: 'Batterie au plomb',
-      sausage: 'Saucisse',
-      product_list_sauces: 'Liste de produits (sauces)',
-      steel_wires: 'Fils d’acier',
-      stainless_steel: 'Acier inoxydable',
-      welding_wire: 'Fil de soudage',
-      grains_spices: 'Grains et épices',
-      basmati_rice: 'Riz basmati 1121',
-      contact_us: 'Nous contacter',
-      download_brochure: 'Télécharger la brochure',
-      brand_name: 'exportation',
-    },
-    es: {
-      about_us: 'Sobre nosotros',
-      who_we_are: 'Quiénes somos',
-      our_values: 'Nuestros valores',
-      products: 'Productos',
-      split_packaging: 'Embalaje dividido',
-      closure: 'Cierre',
-      glass_bottles: 'Botellas de vidrio',
-      food_beverages: 'Alimentos y bebidas',
-      closures_jars: 'Cierres y frascos',
-      battery: 'Batería',
-      lead_acid: 'Batería de plomo-ácido',
-      sausage: 'Salchicha',
-      product_list_sauces: 'Lista de productos (salsas)',
-      steel_wires: 'Alambres de acero',
-      stainless_steel: 'Acero inoxidable',
-      welding_wire: 'Alambre de soldadura',
-      grains_spices: 'Granos y especias',
-      basmati_rice: 'Arroz basmati 1121',
-      contact_us: 'Contáctanos',
-      download_brochure: 'Descargar folleto',
-      brand_name: 'exportación',
-    },
-    de: {
-      about_us: 'Über uns',
-      who_we_are: 'Wer wir sind',
-      our_values: 'Unsere Werte',
-      products: 'Produkte',
-      split_packaging: 'Geteilte Verpackung',
-      closure: 'Verschluss',
-      glass_bottles: 'Glasflaschen',
-      food_beverages: 'Lebensmittel und Getränke',
-      closures_jars: 'Verschlüsse und Gläser',
-      battery: 'Batterie',
-      lead_acid: 'Blei-Säure-Batterie',
-      sausage: 'Wurst',
-      product_list_sauces: 'Produktliste (Saucen)',
-      steel_wires: 'Stahldrähte',
-      stainless_steel: 'Edelstahl',
-      welding_wire: 'Schweißdraht',
-      grains_spices: 'Körner und Gewürze',
-      basmati_rice: '1121 Basmatireis',
-      contact_us: 'Kontaktieren Sie uns',
-      download_brochure: 'Broschüre herunterladen',
-      brand_name: 'Export',
-    },
-  };
-
-  const languageOptions = [
-    { code: 'en', name: 'English' },
-    { code: 'hi', name: 'हिन्दी (Hindi)' },
-    { code: 'fr', name: 'Français (French)' },
-    { code: 'es', name: 'Español (Spanish)' },
-    { code: 'de', name: 'Deutsch (German)' },
-  ];
-
-  useNestedDropdown();
   const sticky = useSticky(350);
   const navbarRef = useRef(null);
 
@@ -497,8 +495,8 @@ const Navbar = (props) => {
               </ul>
             </li>
 
-            <li className="nav-item dropdown dropdown-mega">
-              <NavLinko
+            <li className="nav-item">
+              <NavLink
                 title={translations[selectedLanguage].contact_us}
                 href="/contact-2"
                 className="nav-link"
@@ -508,7 +506,7 @@ const Navbar = (props) => {
 
           {button && (
             <div className="mt-3 d-lg-none">
-              <Buttono
+              <Button
                 title={translations[selectedLanguage].download_brochure}
                 className="btn btn-primary w-100"
                 downloadLink="https://pdfobject.com/pdf/sample.pdf"
@@ -596,7 +594,7 @@ const Navbar = (props) => {
 
         {button && (
           <div className="ms-auto d-none d-lg-block">
-            <Buttono
+            <Button
               title={translations[selectedLanguage].download_brochure}
               className="btn btn-primary"
               downloadLink="https://pdfobject.com/pdf/sample.pdf"
@@ -610,7 +608,7 @@ const Navbar = (props) => {
   return (
     <Fragment>
       {stickyBox && (
-        <div style={{ paddingTop: sticky ? navbarRef.current?.clientHeight : 0 }} />
+        <div style={{ paddingTop: sticky ? navbarRef.current?.clientHeight || 0 : 0 }} />
       )}
 
       <nav ref={navbarRef} className={sticky ? fixedClassName : navClassName}>
@@ -634,6 +632,21 @@ const Navbar = (props) => {
       {cart && <MiniCart />}
     </Fragment>
   );
+};
+
+// PropTypes for type checking
+Navbar.propTypes = {
+  navClassName: PropTypes.string,
+  info: PropTypes.bool,
+  search: PropTypes.bool,
+  social: PropTypes.bool,
+  language: PropTypes.bool,
+  button: PropTypes.bool,
+  cart: PropTypes.bool,
+  fancy: PropTypes.bool,
+  navOtherClass: PropTypes.string,
+  stickyBox: PropTypes.bool,
+  logoAlt: PropTypes.string,
 };
 
 export default Navbar;
