@@ -1,18 +1,13 @@
-// components/Navbar.jsx
+// src/components/blocks/navbar/Navbar.jsx
 import { Fragment, useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
-
-// Dynamically import Bootstrap-dependent components to avoid SSR issues
-const BootstrapComponents = dynamic(() => import('react-bootstrap'), { ssr: false });
 
 // Custom hook for sticky navbar
 const useSticky = (offset) => {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
-    // Check if window is available (SSR-safe)
     if (typeof window === 'undefined') return;
 
     const handleScroll = () => {
@@ -376,6 +371,13 @@ const Navbar = ({
   const sticky = useSticky(350);
   const navbarRef = useRef(null);
 
+  // Load Bootstrap JavaScript client-side
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      import('bootstrap/dist/js/bootstrap.bundle.min.js');
+    }
+  }, []);
+
   const logo = sticky ? 'logo-dark' : logoAlt;
   const fixedClassName = 'navbar navbar-expand-lg center-nav transparent navbar-light navbar-clone fixed';
 
@@ -441,7 +443,7 @@ const Navbar = ({
           title={
             <img
               alt="logo"
-              src={`/img/photos/export_logo.png`}
+              src="/img/photos/export_logo.png"
               className="navbar-logo"
             />
           }
