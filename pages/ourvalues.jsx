@@ -4,9 +4,7 @@ import { Team8 } from 'components/blocks/team';
 import { Navbar } from 'components/blocks/navbar';
 import { Footer8 } from 'components/blocks/footer';
 import { Clients1 } from 'components/blocks/clients';
-import { Process8 } from 'components/blocks/process';
 import Carousel from 'components/reuseable/Carousel';
-import ProgressList from 'components/common/ProgressList';
 import NextLink from 'components/reuseable/links/NextLink';
 import AccordionList from 'components/common/AccordionList';
 import { TestimonialCard2 } from 'components/reuseable/testimonial-cards'; // -------- icons component -------- //
